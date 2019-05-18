@@ -1,6 +1,6 @@
 # fish
 
-This is a sample blue/green application. Based on the version you release, it will
+This is a sample fish application. Based on the version you release, it will
 show it under the /color endpoint. Use the Makefile to build the image and tag
 it based on the version.
 
@@ -11,8 +11,9 @@ it based on the version.
 ## API
 | Endpoint       | Description           |
 | :------------- |:-------------|
-| /     | shows the app name and healthy status |
-| /color     | shows the version |
+| /health   | shows the app name and healthy status |
+| /fish    | shows the version |
+| /   | welcome |
 
 ## Updates
 1. Change the version under "version" file.
