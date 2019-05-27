@@ -5,8 +5,9 @@ show it under the /color endpoint. Use the Makefile to build the image and tag
 it based on the version.
 
 ## Run
-1. Go to [smendiratta/fish](https://hub.docker.com/r/smendiratta/fish) on Docker Hub for version information.
-1. `docker run -d -e fish_APP_PORT=8080 smendiratta/fish:<tag>`
+1. `make golang-build to
+
+1. `docker run -d  smendiratta/fish:<tag>`
 
 ## API
 | Endpoint       | Description           |
@@ -15,7 +16,9 @@ it based on the version.
 | /fish    | shows the version |
 | /   | welcome |
 
-## Updates
+## Run
 1. Change the version under "version" file.
-1. Issue `make golang-build` to build the binary and container.
-1. Issue `make push` to push it to Docker Hub.
+2. Issue `make golang-build` to build the binary and container.
+3. Issue `make run` to run in docker
+4. Issue `make show` to run in docker
+3. Issue `make push` to push it to Docker Hub.
