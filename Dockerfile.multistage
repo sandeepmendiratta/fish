@@ -14,23 +14,19 @@ COPY . .
 # Download dependencies
 RUN go get -d -v ./...
 
-RUN go install -v ./...
 
 # Build the Go app
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /go/bin/fish .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
 
 
-######## Start a new stage from scratch #######
-FROM alpine:latest
+## deployment image
+FROM scratch
 
-RUN apk --no-cache add ca-certificates
+# copy ca-certificates from builder
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 
-WORKDIR /root/
+WORKDIR /bin/
 
-# Copy the Pre-built binary file from the previous stage
+COPY --from=builder /go/src/github.com/sandeepmendiratta/fish/app .
 
-COPY --from=builder /go/bin/fish .
-
-#EXPOSE 8080
-
-CMD ["./fish"]
+CMD [ "./app" ]
