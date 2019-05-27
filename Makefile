@@ -7,10 +7,13 @@ golang-build:
 	docker build -t $(IMAGE):$(TAG) -f Dockerfile .
 
 run:
-	docker run -d -e fish_APP_PORT=8080 -p 8080:8080 --name $(NAME) $(IMAGE):$(TAG)
+	docker run -d -p 80:8080 --name $(NAME) $(IMAGE):$(TAG)
 
 delete:
 	docker rm -f $(NAME)
 
 push:
 	docker push $(IMAGE):$(TAG)
+
+show:
+	curl http://127.0.0.1/fish

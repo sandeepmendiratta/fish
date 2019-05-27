@@ -21,8 +21,8 @@ type Health struct {
 	Status string `json:"status"`
 }
 
-type Color struct {
-	Name string `json:"name,omitempty"`
+type FishColor struct {
+	Color string `json:"color,omitempty"`
 }
 
 func check(e error) {
@@ -39,22 +39,23 @@ func GetHealth(w http.ResponseWriter, r *http.Request) {
 func GetColor(w http.ResponseWriter, r *http.Request) {
 	version, err := ioutil.ReadFile("version")
 	check(err)
-	color := Color{Name: string(version)}
+	color := FishColor{Color: string(version)}
 	json.NewEncoder(w).Encode(color)
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Welcome!\n")
+	fmt.Fprint(w, "Welcome to fish app!\n")
+	fmt.Fprint(w, "You can check my color with /fish\n")
+
 }
 
 func main() {
+	port := ":8080"
 	// port := fmt.Sprintf(":%s", os.Getenv(ENV_APP_PORT_KEY))
-	//port := "8080"
 	router := mux.NewRouter()
 	router.HandleFunc("/health", GetHealth).Methods("GET")
 	router.HandleFunc("/fish", GetColor).Methods("GET")
 	router.HandleFunc("/", Index)
-	fmt.Println("Running server!")
-	fmt.Println("http://127.0.0.1:8080/fish")
-	log.Fatal(http.ListenAndServe(":8080", router))
+	fmt.Println("Running server at", port)
+	log.Fatal(http.ListenAndServe(port, router))
 }
